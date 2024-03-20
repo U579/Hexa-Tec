@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Objects;
 
 public class conexion_wifi extends AppCompatActivity{
 
@@ -53,6 +55,7 @@ public class conexion_wifi extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conexion_wifi);
+        cambiarFondo(getIntent().getStringExtra("fondo"));
         findViewById(R.id.btn_atras_wifi).setOnClickListener(v -> finish());
         findViewById(R.id.btn_conectar_wifi).setOnClickListener(v -> conectar());
         findViewById(R.id.btn_recargar_wifi).setOnClickListener(v -> recargar());
@@ -62,6 +65,15 @@ public class conexion_wifi extends AppCompatActivity{
         intensidadRed = findViewById(R.id.intensidad_red);
         wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         recargar();
+    }
+
+    private void cambiarFondo(String fondo){
+        if(fondo.equals( "spider")){
+            ((LinearLayout)findViewById(R.id.fondo)).setBackgroundResource(R.drawable.spider_fondo);
+        }
+        else{
+            ((LinearLayout)findViewById(R.id.fondo)).setBackgroundResource(R.drawable.scorpion_fondo);
+        }
     }
 
     private void conectar(){

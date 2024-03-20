@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_ajustes).setOnClickListener(v -> abrirAjustes());
-        findViewById(R.id.btn_wifi).setOnClickListener(v -> abrirWifi());
-        findViewById(R.id.btn_bluetooth).setOnClickListener(v -> abrirBluetooth());
+        findViewById(R.id.conectar_spider).setOnClickListener(v -> abrirWifi("spider"));
+        findViewById(R.id.conectar_scorpion).setOnClickListener(v -> abrirWifi("scorpion"));
         comprobarCarpeta("settings");
         comprobarCarpeta("databases");
     }
@@ -41,11 +41,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ajustes.class));
     }
 
-    private void abrirWifi(){
-        startActivity(new Intent(MainActivity.this, conexion_wifi.class));
-    }
-
-    private void abrirBluetooth(){
-        startActivity(new Intent(MainActivity.this, conexion_bluetooth.class));
+    private void abrirWifi(String fondo){
+        Intent conexion = new Intent(MainActivity.this, conexion_wifi.class);
+        conexion.putExtra("fondo", fondo);
+        startActivity(conexion);
     }
 }

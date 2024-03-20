@@ -4,8 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="anaranjado">#F0A30A</color>
     <color name="anaranjado_a70">#B3F0A30A</color>
+    <color name="anaranjado_oscuro">#FF8000</color>
     <color name="Azul">#FF0099CC</color>
     <color name="Azul_claro">#33B5E5</color>
     <color name="verde_claro">#60A917</color>
     <color name="transparente">#00FFFFFF</color>
+    <color name="rojo">#FF0000</color>
+    <color name="rojo_oscuro">#330000</color>
 </resources>

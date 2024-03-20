@@ -2,7 +2,6 @@
     <string name="app_name">Hexa - Tec</string>
     <string name="configuración">Configuración</string>
     <string name="wifi">Wi-Fi</string>
-    <string name="bluetooth">Bluetooth</string>
     <string name="conectado">Conectado</string>
     <string name="conexion">Conexión</string>
     <string name="conectar">Conectar</string>
@@ -45,8 +44,6 @@
     <string name="camara">Activar / desactivar camara.</string>
     <string name="salir">Regresar a menu principal.</string>
     <string name="nivel_bateria">0%</string>
-    <string name="dispositivo">Dispositivo : </string>
-    <string name="version_bluetooth">Version : </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="spider">Araña</string>
+    <string name="scorpion">Escorpión</string>
 </resources>
