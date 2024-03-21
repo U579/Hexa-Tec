@@ -3,6 +3,8 @@ package com.example.controlrobotexapodo;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -27,7 +29,8 @@ public class normal1 extends Fragment {
     private String mParam1;
     private String mParam2;
     private ImageView joystick;
-    private float x,y,dx,dy;
+    private float x,x2,y,y2,dx,dy;
+    private ConstraintLayout cl;
 
     public normal1() {
         // Required empty public constructor
@@ -65,6 +68,7 @@ public class normal1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_normal1, container, false);
         joystick = view.findViewById(R.id.joystick);
+        cl = view.findViewById(R.id.cont_joystick);
         joystick.setOnTouchListener(touchListener());
         return view;
     }
@@ -86,10 +90,27 @@ public class normal1 extends Fragment {
             case MotionEvent.ACTION_MOVE:
                 dx = event.getX() - x;
                 dy = event.getY() - y;
-                joystick.setX(joystick.getX() + dx);
-                joystick.setY(joystick.getY() + dy);
+                x2 = joystick.getX() + dx;
+                y2 = joystick.getY() + dy;
+                if(x2 < 0){
+                    x2 = 0;
+                }
+                else if (x2 > cl.getWidth() - joystick.getWidth()) {
+                    x2 = cl.getWidth() - joystick.getWidth();
+                }
+                if(y2 < 0){
+                    y2 = 0;
+                }
+                else if(y2 > cl.getHeight() - joystick.getHeight()){
+                    y2 = cl.getHeight() - joystick.getHeight();
+                }
+                System.out.println("X : " + x2 + ", Y : " + y2);
+                joystick.setX(x2);
+                joystick.setY(y2);
                 break;
             case MotionEvent.ACTION_UP:
+                joystick.setX(((float) cl.getWidth() / 2) - ((float) joystick.getWidth() / 2));
+                joystick.setY(((float) cl.getHeight() / 2) - ((float) joystick.getHeight() / 2));
                 break;
         }
     }

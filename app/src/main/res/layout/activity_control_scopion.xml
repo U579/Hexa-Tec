@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".contol">
-
-    <VideoView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    tools:context=".control_scopion">
 
     <LinearLayout
-        android:id="@+id/pantalla"
+        android:id="@+id/pantalla_scorpion"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
@@ -18,7 +15,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/control_superior"
+            android:id="@+id/control_superior_scorpion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -49,12 +46,21 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/salir_control"
+                android:id="@+id/salir_control_scorpion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:src="@drawable/baseline_exit_to_app_24"
                 android:contentDescription="@string/salir" />
+
+            <Switch
+                style="@style/ThemeOverlay.App.widget.switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/black"
+                android:textSize="20sp"
+                android:hint="@string/auto"
+                tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -108,20 +114,51 @@
 
                 </LinearLayout>
 
-                <ImageView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/baseline_video_camera_back_24"
-                    android:contentDescription="@string/camara"
-                    tools:ignore="NestedWeights" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/baseline_video_camera_back_24"
+                        android:contentDescription="@string/camara"
+                        tools:ignore="NestedWeights" />
+
+                    <ImageView
+                        android:id="@+id/btn_radar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/baseline_radar_24"
+                        android:contentDescription="@string/radar"
+                        tools:ignore="NestedWeights" />
+
+                    <ImageView
+                        android:id="@+id/btn_defensa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/baseline_shield_24"
+                        android:contentDescription="@string/escudo"
+                        tools:ignore="NestedWeights" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
         <FrameLayout
-            android:id="@+id/cont_normal"
+            android:id="@+id/rad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <FrameLayout
+            android:id="@+id/cont_normal_scorpion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

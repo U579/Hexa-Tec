@@ -46,4 +46,9 @@
     <string name="nivel_bateria">0%</string>
     <string name="spider">Araña</string>
     <string name="scorpion">Escorpión</string>
+    <string name="auto">Auto</string>
+    <string name="radar">Logo de boton para activar el modo radar del robot.</string>
+    <string name="escudo">Logo para activar el modo defensa del robot.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
