@@ -30,6 +30,7 @@ public class normal1 extends Fragment {
     private String mParam2;
     private ImageView joystick;
     private float x,x2,y,y2,dx,dy;
+    private  int vx = 0, vy = 0;
     private ConstraintLayout cl;
 
     public normal1() {
@@ -90,27 +91,37 @@ public class normal1 extends Fragment {
             case MotionEvent.ACTION_MOVE:
                 dx = event.getX() - x;
                 dy = event.getY() - y;
+                //asignar posicion de bolita en X y Y
                 x2 = joystick.getX() + dx;
                 y2 = joystick.getY() + dy;
+                //establecer limites de movimiento en X
                 if(x2 < 0){
                     x2 = 0;
                 }
                 else if (x2 > cl.getWidth() - joystick.getWidth()) {
                     x2 = cl.getWidth() - joystick.getWidth();
                 }
+                //establecer limites de movimiento en Y
                 if(y2 < 0){
                     y2 = 0;
                 }
                 else if(y2 > cl.getHeight() - joystick.getHeight()){
                     y2 = cl.getHeight() - joystick.getHeight();
                 }
-                System.out.println("X : " + x2 + ", Y : " + y2);
+                //asignar valores de X y Y para trabajar con ellos
+                vx = (int)((x2 + 1) / 100);
+                vy = (int)((y2 + 1) / 100);
+                //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
                 break;
             case MotionEvent.ACTION_UP:
+                //regresar bolita al centro
                 joystick.setX(((float) cl.getWidth() / 2) - ((float) joystick.getWidth() / 2));
                 joystick.setY(((float) cl.getHeight() / 2) - ((float) joystick.getHeight() / 2));
+                //establecer valores en 0
+                vx = 0;
+                vy = 0;
                 break;
         }
     }
