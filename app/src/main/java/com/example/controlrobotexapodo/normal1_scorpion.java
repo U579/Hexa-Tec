@@ -84,25 +84,13 @@ public class normal1_scorpion extends Fragment {
             case MotionEvent.ACTION_MOVE:
                 dx = event.getX() - x;
                 dy = event.getY() - y;
-                //asignar posicion de bolita en X y Y
-                x2 = joystick.getX() + dx;
-                y2 = joystick.getY() + dy;
-                //establecer limites de movimiento en X
-                if(x2 < 0){
-                    x2 = 0;
-                }
-                else if (x2 > cl.getWidth() - joystick.getWidth()) {
-                    x2 = cl.getWidth() - joystick.getWidth();
-                }
-                //establecer limites de movimiento en Y
-                if(y2 < 0){
-                    y2 = 0;
-                }
-                else if(y2 > cl.getHeight() - joystick.getHeight()){
-                    y2 = cl.getHeight() - joystick.getHeight();
-                }
+                //asignar posicion y limites de bolita en X y Y
+                x2 = limite(joystick.getX() + dx);
+                y2 = limite(joystick.getY() + dy);
                 //asignar valores de X y Y para trabajar con ellos
-                asignarValores();
+                vx = asignar(x2);
+                vy = asignar(y2);
+                System.out.println("Valores X: " + vx + ", Y: " + vy);
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
@@ -118,24 +106,29 @@ public class normal1_scorpion extends Fragment {
         }
     }
 
-    private void asignarValores(){
-        if(x2 + 1 == 200){
-            vx = 0;
+    private float limite(float posicion){
+        if(posicion < 0){
+            return 0;
         }
-        else if(x2 + 1 < 200){
-            vx = -1;
+        else if(posicion > cl.getHeight() - joystick.getHeight()){
+            return cl.getHeight() - joystick.getHeight();
         }
-        else{
-            vx = 1;
+        return posicion;
+    }
+
+    private int asignar(float comparar){
+        if(comparar + 1 > (float) cl.getWidth() / 2){
+            if(comparar + 1 > ((float) cl.getWidth() / 4) * 3){
+                return 2;
+            }
+            return 1;
         }
-        if(y2 + 1 == 200){
-            vy = 0;
+        else if(comparar + 1 < (float) cl.getWidth() / 2){
+            if(comparar + 1 < (float) cl.getWidth() / 4){
+                return -2;
+            }
+            return -1;
         }
-        else if(y2 + 1 < 200){
-            vy = -1;
-        }
-        else{
-            vy = 1;
-        }
+        return 0;
     }
 }
