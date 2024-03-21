@@ -18,11 +18,23 @@ import java.nio.charset.StandardCharsets;
 
 public class Almacenamiento {
 
+    /**
+     * Constructor vacio para la clase
+     */
     Almacenamiento(){
     }
 
+
+    /**
+     * Metodo para crear una carpeta nueva
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param context Interfaz actual de la aplicación
+     * @param nombre Nombre de la carpeta
+     * @return Boolean
+     */
     @NonNull
-    public Boolean crearCarpeta(Context context, String nombre){
+    public Boolean crearCarpeta(@NonNull Context context, String nombre){
         File carpeta = new File(context.getFilesDir(),nombre);
         if(!carpeta.exists()){
             return carpeta.mkdir();
@@ -30,6 +42,13 @@ public class Almacenamiento {
         return true;
     }
 
+    /**
+     * Metodo para leer un archivo json del almacenamiento interno del sistema
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param ruta Ruta de donde está almacenado el archivo
+     * @return JSONObject
+     */
     public JSONObject leerJSON(String ruta){
         try {
             File archivo = new File(ruta, "settings.json");
@@ -45,7 +64,13 @@ public class Almacenamiento {
         return null;
     }
 
-    // Método para cargar el archivo JSON desde la carpeta de recursos
+    /**
+     * Metodo para leer un archivo JSON almacenado dentro de la aplicación.
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param context Interfaz actual de la aplicación
+     * @return JSONObject
+     */
     public JSONObject cargarJSONlocal(Context context) {
         try {
             Resources resources = context.getResources();
@@ -62,6 +87,13 @@ public class Almacenamiento {
         return null;
     }
 
+    /**
+     * Metodo para leer el archivo JSON obtenido
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param bufferedReader Buffer de datos que contiene la informacion del archivo
+     * @return StringBuilder
+     */
     @NonNull
     private StringBuilder leido(@NonNull BufferedReader bufferedReader) throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
@@ -72,7 +104,13 @@ public class Almacenamiento {
         return stringBuilder;
     }
 
-    // Método para guardar el JSON en un archivo en la memoria interna del dispositivo
+    /**
+     * Metodo para almacenar un JSON en el almacenamiento del dispositivo
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param json JSON a almacenar en
+     * @param ruta Ruta donde se almacenará el archivo
+     */
     public void guardarJSON(String json, String ruta) {
         try {
             if(!new File(ruta, json).createNewFile()){
@@ -86,6 +124,14 @@ public class Almacenamiento {
         }
     }
 
+    /**
+     * Comprobar si un archivo json existe dentro de los archivos de la aplicacion almacenados en el dispositivo
+     * @author: Uriel Gómez
+     * @version: 21/03/2024
+     * @param ruta Ruta del archivo
+     * @param nombre Nombre del archivo
+     * @return Boolean
+     */
     public Boolean comprobarJSON(String ruta, String nombre){
         return new File(ruta, nombre).exists();
     }
