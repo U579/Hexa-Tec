@@ -69,8 +69,4 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String s) {
         System.out.println(s);
     }
-
-    public void setJson(JSONObject json) {
-        this.json = json;
-    }
 }
