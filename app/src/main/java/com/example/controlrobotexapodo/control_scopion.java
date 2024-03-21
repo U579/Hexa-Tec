@@ -140,7 +140,7 @@ public class control_scopion extends AppCompatActivity {
     private void cambiarControl(){
         switch (normal){
             case 1:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, new normal1()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, new normal1_scorpion()).commit();
                 break;
             case 2:
                 getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal2()).commit();

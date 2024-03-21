@@ -12,13 +12,13 @@ import java.net.URL;
 
 public class EnviarDatos extends AsyncTask<String, Void, String> {
 
-    private JSONObject json;
+    private int puerto;
 
     /**
-     * @param json
+     * @param puerto
      */
-    EnviarDatos(JSONObject json){
-        this.json = json;
+    EnviarDatos(int puerto){
+        this.puerto = puerto;
     }
 
     /**
@@ -31,7 +31,7 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
         StringBuilder resultado = new StringBuilder();
         HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL("http://" + json.get("ip") + ":" + json.get("puerto") + "/Hola"); // Reemplaza con la dirección IP del ESP01
+            URL url = new URL("http://192.168.4.1:" + puerto + "/Enable"); // Reemplaza con la dirección IP del ESP01
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(true);
