@@ -24,7 +24,7 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
      */
     EnviarDatos(){}
 
-    /**
+    /**Constructor con parametros para la clase
      * @param puerto
      * @param robot
      */

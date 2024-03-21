@@ -4,6 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/scorpion_fondo"
     tools:context=".control_scopion">
 
     <LinearLayout
@@ -11,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="top"
-        android:background="@color/white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,13 +35,7 @@
                     android:layout_height="wrap_content"
                     android:textColorHint="@color/black"
                     android:textSize="20sp"
-                    android:hint="@string/conectadoa"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/black"
-                    android:textSize="20sp"/>
+                    android:hint="@string/conectado"/>
 
             </LinearLayout>
 
@@ -63,6 +57,7 @@
                 tools:ignore="UseSwitchCompatOrMaterialXml" />
 
             <ImageView
+                android:id="@+id/lista_grabaciones"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -133,6 +128,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:layout_marginBottom="5dp"
                         android:src="@drawable/baseline_radar_24"
                         android:contentDescription="@string/radar"
                         tools:ignore="NestedWeights" />
@@ -142,6 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
                         android:layout_weight="1"
+                        android:layout_marginTop="5dp"
                         android:src="@drawable/baseline_shield_24"
                         android:contentDescription="@string/escudo"
                         tools:ignore="NestedWeights" />

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".normal3_scorpion">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:baselineAligned="false"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginBottom="30dp"
+            android:layout_gravity="bottom"
+            android:orientation="vertical"
+            android:gravity="center"
+            tools:ignore="InefficientWeight">
+
+            <ImageView
+                android:id="@+id/adelante_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/baseline_keyboard_arrow_up_24"
+                tools:ignore="InefficientWeight,NestedWeights"
+                android:contentDescription="@string/adelante" />
+
+            <ImageView
+                android:id="@+id/atras_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/baseline_keyboard_arrow_down_24"
+                tools:ignore="InefficientWeight"
+                android:contentDescription="@string/atras" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:ignore="InefficientWeight" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="80dp"
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="InefficientWeight">
+
+            <ImageView
+                android:id="@+id/rotar_izquierda_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="25dp"
+                android:src="@drawable/baseline_rotate_24"
+                tools:ignore="InefficientWeight,NestedWeights"
+                android:contentDescription="@string/adelante" />
+
+            <ImageView
+                android:id="@+id/rotar_derecha_sc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:src="@drawable/baseline_rotate_24"
+                tools:ignore="InefficientWeight"
+                android:rotationY="@integer/material_motion_duration_medium_1"
+                android:contentDescription="@string/atras" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

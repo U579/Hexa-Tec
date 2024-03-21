@@ -24,7 +24,6 @@ public class Almacenamiento {
     Almacenamiento(){
     }
 
-
     /**
      * Metodo para crear una carpeta nueva
      * @author: Uriel Gómez

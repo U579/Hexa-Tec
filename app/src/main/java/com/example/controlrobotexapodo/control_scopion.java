@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -44,10 +45,12 @@ public class control_scopion extends AppCompatActivity {
         ruta = getApplicationContext().getFilesDir() + "/settings";
         findViewById(R.id.salir_control_scorpion).setOnClickListener(v -> finish());
         findViewById(R.id.btn_radar).setOnClickListener(v -> agregarRadar());
+        findViewById(R.id.lista_grabaciones).setOnClickListener(v -> aparecerLista());
         asignarValores(Objects.requireNonNull(JSON()));
         cambiarControl();
     }
 
+    @Nullable
     private JSONObject JSON(){
         try{
             if(almacenamiento.crearCarpeta(getApplicationContext(), "settings")){
@@ -83,15 +86,19 @@ public class control_scopion extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, new normal1_scorpion()).commit();
                 break;
             case 2:
-                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal2()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal2_scorpion()).commit();
                 break;
             case 3:
-                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal2()).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal3_scorpion()).commit();
                 break;
         }
     }
 
     private void agregarRadar(){
         getSupportFragmentManager().beginTransaction().replace(R.id.rad, new radar()).commit();
+    }
+
+    private void aparecerLista(){
+        getSupportFragmentManager().beginTransaction().add(R.id.pantalla_scorpion, new grabaciones()).commit();
     }
 }

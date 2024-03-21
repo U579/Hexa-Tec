@@ -107,8 +107,9 @@ public class normal1_scorpion extends Fragment {
                 vy = 0;
                 break;
         }
-        EnviarDatos ed = new EnviarDatos(333, "scorpion");
-        ed.execute(vx + "", vy + "");
+        System.out.println("X: " + vx + ", Y: " + vy);
+        /*EnviarDatos ed = new EnviarDatos(333, "scorpion");
+        ed.execute(vx + "", vy + "");*/
     }
 
     private float limite(float posicion){
