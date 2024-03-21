@@ -13,6 +13,7 @@ import java.net.URL;
 public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     private int puerto;
+    private int x = 0, y = 0;
 
     /**
      * @param puerto
@@ -68,5 +69,13 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String s) {
         System.out.println(s);
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 }

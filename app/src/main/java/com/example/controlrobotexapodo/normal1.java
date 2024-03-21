@@ -106,8 +106,7 @@ public class normal1 extends Fragment {
                     y2 = cl.getHeight() - joystick.getHeight();
                 }
                 //asignar valores de X y Y para trabajar con ellos
-                vx = (int)((x2 + 1) / 100);
-                vy = (int)((y2 + 1) / 100);
+                asignarValores();
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
@@ -120,6 +119,27 @@ public class normal1 extends Fragment {
                 vx = 0;
                 vy = 0;
                 break;
+        }
+    }
+
+    private void asignarValores(){
+        if(x2 + 1 == 200){
+            vx = 0;
+        }
+        else if(x2 + 1 < 200){
+            vx = -1;
+        }
+        else{
+            vx = 1;
+        }
+        if(y2 + 1 == 200){
+            vy = 0;
+        }
+        else if(y2 + 1 < 200){
+            vy = -1;
+        }
+        else{
+            vy = 1;
         }
     }
 }
