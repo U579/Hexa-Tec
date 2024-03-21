@@ -17,6 +17,8 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Almacenamiento almacenamiento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +26,13 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btn_ajustes).setOnClickListener(v -> abrirAjustes());
         findViewById(R.id.conectar_spider).setOnClickListener(v -> conectar(80));
         findViewById(R.id.conectar_scorpion).setOnClickListener(v -> conectar(333));
-        comprobarCarpeta("settings");
-        comprobarCarpeta("databases");
+        almacenamiento = new Almacenamiento();
+        crearCarpetas();
     }
 
-    private void comprobarCarpeta(String nombre){
-        File carpeta = new File(Environment.getRootDirectory(),nombre);
-        if(!carpeta.exists()){
-            if(carpeta.mkdir()){
-                System.out.println("Carpeta creada");
-            }
-        }
+    private void crearCarpetas(){
+        almacenamiento.crearCarpeta(getApplicationContext(),"settings");
+        almacenamiento.crearCarpeta(getApplicationContext(),"databases");
     }
 
     private void abrirAjustes(){
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             rq.add(sr);
         }
         catch (Exception e){
-            System.out.println(e.toString());
+            System.out.println(e);
             Toast.makeText(this, "Error al realizar la conexión.", Toast.LENGTH_SHORT).show();
         }
         if(puerto == 333){

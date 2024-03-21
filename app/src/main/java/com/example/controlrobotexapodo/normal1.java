@@ -94,7 +94,6 @@ public class normal1 extends Fragment {
                 //asignar valores de X y Y para trabajar con ellos
                 vx = asignar(x2);
                 vy = asignar(y2);
-                System.out.println("Valores X: " + vx + ", Y: " + vy);
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);

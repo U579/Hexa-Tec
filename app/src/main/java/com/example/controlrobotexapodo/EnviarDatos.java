@@ -2,6 +2,9 @@ package com.example.controlrobotexapodo;
 
 import android.os.AsyncTask;
 
+import androidx.annotation.NonNull;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,22 +16,31 @@ import java.net.URL;
 public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     private int puerto;
-    private int x = 0, y = 0;
-
-    /**
-     * @param puerto
-     */
-    EnviarDatos(int puerto){
-        this.puerto = puerto;
-    }
+    private String robot;
+    private JSONObject json;
 
     /**
      * Constructor vacio de la clase
      */
-    public EnviarDatos(){}
+    EnviarDatos(){}
+
+    /**
+     * @param puerto
+     * @param robot
+     */
+    EnviarDatos(int puerto, String robot){
+        this.puerto = puerto;
+        this.robot = robot;
+    }
 
     @Override
-    protected String doInBackground(String... strings) {
+    protected String doInBackground(@NonNull String... strings) {
+        try {
+            json = new JSONObject(strings[0]);
+        }
+        catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
         StringBuilder resultado = new StringBuilder();
         HttpURLConnection urlConnection = null;
         try {
@@ -55,7 +67,7 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
             }
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e);
             resultado = new StringBuilder("Excepción: " + e.getMessage());
         }
         finally {
@@ -71,11 +83,11 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
         System.out.println(s);
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setPuerto(int puerto) {
+        this.puerto = puerto;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setRobot(String robot) {
+        this.robot = robot;
     }
 }

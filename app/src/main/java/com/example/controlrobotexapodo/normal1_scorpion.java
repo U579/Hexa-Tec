@@ -3,6 +3,7 @@ package com.example.controlrobotexapodo;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -11,6 +12,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import org.jetbrains.annotations.Contract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,11 +27,11 @@ public class normal1_scorpion extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private ImageView joystick;
-    private float x,x2,y,y2,dx,dy;
+    private float x,x2,y,y2;
     private  int vx = 0, vy = 0;
     private ConstraintLayout cl;
 
-    public normal1_scorpion() {
+    public normal1_scorpion(){
     }
 
     /**
@@ -39,6 +42,7 @@ public class normal1_scorpion extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment normal1_scorpion.
      */
+    @NonNull
     public static normal1_scorpion newInstance(String param1, String param2) {
         normal1_scorpion fragment = new normal1_scorpion();
         Bundle args = new Bundle();
@@ -59,38 +63,37 @@ public class normal1_scorpion extends Fragment {
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_normal1_scorpion, container, false);
         joystick = view.findViewById(R.id.joystick_scorpion);
         cl = view.findViewById(R.id.cont_joystick_scorpion);
-        joystick.setOnTouchListener(touchListener());
+        joystick.setOnTouchListener(movimientoJoystick());
         return view;
     }
 
+    @NonNull
+    @Contract(pure = true)
     @SuppressLint("ClickableViewAccessibility")
-    private View.OnTouchListener touchListener(){
+    private View.OnTouchListener movimientoJoystick(){
         return (v, event) -> {
             mover(event);
             return true;
         };
     }
 
-    private void mover(MotionEvent event){
+    private void mover(@NonNull MotionEvent event){
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
                 y = event.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                dx = event.getX() - x;
-                dy = event.getY() - y;
                 //asignar posicion y limites de bolita en X y Y
-                x2 = limite(joystick.getX() + dx);
-                y2 = limite(joystick.getY() + dy);
+                x2 = limite(joystick.getX() + event.getX() - x);
+                y2 = limite(joystick.getY() + event.getY() - y);
                 //asignar valores de X y Y para trabajar con ellos
                 vx = asignar(x2);
                 vy = asignar(y2);
-                System.out.println("Valores X: " + vx + ", Y: " + vy);
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
@@ -104,6 +107,8 @@ public class normal1_scorpion extends Fragment {
                 vy = 0;
                 break;
         }
+        EnviarDatos ed = new EnviarDatos(333, "scorpion");
+        ed.execute(vx + "", vy + "");
     }
 
     private float limite(float posicion){
