@@ -1,16 +1,17 @@
 package com.example.controlrobotexapodo;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,17 +57,35 @@ public class grabaciones extends Fragment {
         }
     }
 
-    @SuppressLint({"CommitTransaction", "MissingInflatedId"})
+    @SuppressLint({"CommitTransaction", "MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_normal1_scorpion, container, false);
-        view.setZ(1);
-        //getChildFragmentManager().beginTransaction().add(R.id.lista_grabaciones, new guardado()).commit();
-        //view.findViewById(R.id.cerrar_lista).setOnClickListener(v -> ocultar(view));
+        View view = inflater.inflate(R.layout.fragment_grabaciones, container, false);
+        insertarFila("Lista vacia.", "", "blanco");
+        view.findViewById(R.id.cerrar_lista).setOnTouchListener((v, event) -> ocultar(view,(TextView)v,event));
         return view;
     }
 
-    private void ocultar(@NonNull View view){
-        view.setVisibility(View.GONE);
+    private boolean ocultar(@NonNull View view, TextView texto, @NonNull MotionEvent event){
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                texto.setTextColor(Color.RED);
+                break;
+            case MotionEvent.ACTION_UP:
+                view.setVisibility(View.GONE);
+                break;
+        }
+        return true;
+    }
+
+    private void insertarFila(String... strings){
+        Bundle bundle = new Bundle();
+        bundle.putString("Nombre", strings[0]);
+        bundle.putString("Fecha", strings[1]);
+        bundle.putString("Color", strings[2]);
+        Fragment fragment = new guardado();
+        fragment.setArguments(bundle);
+        getChildFragmentManager().beginTransaction().add(R.id.grabaciones, fragment).commit();
+        System.out.println("Fila insertada.");
     }
 }

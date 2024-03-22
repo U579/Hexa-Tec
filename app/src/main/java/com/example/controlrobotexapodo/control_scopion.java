@@ -3,6 +3,8 @@ package com.example.controlrobotexapodo;
 import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,8 +47,8 @@ public class control_scopion extends AppCompatActivity {
         almacenamiento = new Almacenamiento();
         ruta = getApplicationContext().getFilesDir() + "/settings";
         findViewById(R.id.salir_control_scorpion).setOnClickListener(v -> finish());
-        findViewById(R.id.btn_radar).setOnClickListener(v -> agregarRadar());
-        findViewById(R.id.lista_grabaciones).setOnClickListener(v -> aparecerLista());
+        findViewById(R.id.btn_radar).setOnClickListener(v -> agregar("radar"));
+        findViewById(R.id.lista_grabaciones).setOnClickListener(v -> agregar("lista"));
         asignarValores(Objects.requireNonNull(JSON()));
         cambiarControl();
     }
@@ -94,11 +97,20 @@ public class control_scopion extends AppCompatActivity {
         }
     }
 
-    private void agregarRadar(){
-        getSupportFragmentManager().beginTransaction().replace(R.id.rad, new radar()).commit();
-    }
-
-    private void aparecerLista(){
-        getSupportFragmentManager().beginTransaction().add(R.id.pantalla_scorpion, new grabaciones()).commit();
+    private void agregar(String objeto){
+        if(findViewById(R.id.sobreponer).getVisibility() == View.VISIBLE){
+            findViewById(R.id.sobreponer).setVisibility(View.GONE);
+        }
+        else{
+            switch (objeto){
+                case "radar":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.sobreponer, new radar()).commit();
+                    break;
+                case "lista":
+                    getSupportFragmentManager().beginTransaction().replace(R.id.sobreponer, new grabaciones()).commit();
+                    break;
+            }
+            findViewById(R.id.sobreponer).setVisibility(View.VISIBLE);
+        }
     }
 }

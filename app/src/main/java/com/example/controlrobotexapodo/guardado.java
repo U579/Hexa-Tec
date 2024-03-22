@@ -1,12 +1,17 @@
 package com.example.controlrobotexapodo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +39,7 @@ public class guardado extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment guardado.
      */
+    @NonNull
     public static guardado newInstance(String param1, String param2) {
         guardado fragment = new guardado();
         Bundle args = new Bundle();
@@ -53,8 +59,18 @@ public class guardado extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_normal1_scorpion, container, false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_guardado, container, false);
+        asignar(getArguments(), view);
         return view;
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private void asignar(@NonNull Bundle bundle, @NonNull View view){
+        ((TextView)view.findViewById(R.id.nombre_grabacion)).setText(bundle.getString("Nombre"));
+        ((TextView)view.findViewById(R.id.fecha_guardado)).setText(bundle.getString("Fecha"));
+        if(!Objects.equals(bundle.getString("Color"), "blanco")){
+            view.findViewById(R.id.fila).setBackground(getResources().getDrawable(R.drawable.color_fila_guardado));
+        }
     }
 }

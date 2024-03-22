@@ -11,4 +11,5 @@
     <color name="transparente">#00FFFFFF</color>
     <color name="rojo">#FF0000</color>
     <color name="rojo_oscuro">#330000</color>
+    <color name="gris_claro">#AAAAAA</color>
 </resources>
