@@ -4,7 +4,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/scorpion_fondo"
+    android:background="@color/gris_oscuro"
     tools:context=".control_scopion">
 
     <LinearLayout

@@ -52,8 +52,6 @@ public class radar extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_radar, container, false);
-        View f = view.findViewById(R.id.fondo);
-        f.setBackgroundColor(Color.BLACK);
         return view;
     }
 }

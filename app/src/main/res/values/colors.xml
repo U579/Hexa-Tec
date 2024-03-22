@@ -12,4 +12,5 @@
     <color name="rojo">#FF0000</color>
     <color name="rojo_oscuro">#330000</color>
     <color name="gris_claro">#AAAAAA</color>
+    <color name="gris_oscuro">#444444</color>
 </resources>
