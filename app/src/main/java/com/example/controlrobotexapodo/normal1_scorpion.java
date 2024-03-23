@@ -27,9 +27,10 @@ public class normal1_scorpion extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     private ImageView joystick;
-    private float x,x2,y,y2;
-    private  int vx = 0, vy = 0;
+    private float x;
+    private float y;
     private ConstraintLayout cl;
+    private Bundle args;
 
     public normal1_scorpion(){
     }
@@ -65,6 +66,7 @@ public class normal1_scorpion extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_normal1_scorpion, container, false);
+        args = getArguments();
         joystick = view.findViewById(R.id.joystick_scorpion);
         cl = view.findViewById(R.id.cont_joystick_scorpion);
         joystick.setOnTouchListener(movimientoJoystick());
@@ -89,11 +91,11 @@ public class normal1_scorpion extends Fragment {
                 break;
             case MotionEvent.ACTION_MOVE:
                 //asignar posicion y limites de bolita en X y Y
-                x2 = limite(joystick.getX() + event.getX() - x);
-                y2 = limite(joystick.getY() + event.getY() - y);
+                float x2 = limite(joystick.getX() + event.getX() - x);
+                float y2 = limite(joystick.getY() + event.getY() - y);
                 //asignar valores de X y Y para trabajar con ellos
-                vx = asignar(x2);
-                vy = asignar(y2);
+                int vx = asignar(x2);
+                int vy = asignar(y2);
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
