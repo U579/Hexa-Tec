@@ -24,7 +24,6 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     private Almacenamiento almacenamiento;
-    private Conexion conexion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.conectar_scorpion).setOnClickListener(v -> conectar(333));
         almacenamiento = new Almacenamiento();
         crearCarpetas();
-        conexion = new Conexion();
     }
 
     private void crearCarpetas(){
