@@ -1,13 +1,18 @@
 package com.example.controlrobotexapodo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import org.jetbrains.annotations.Contract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,6 +23,7 @@ public class normal2_scorpion extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private Bundle args;
 
     private String mParam1;
     private String mParam2;
@@ -33,6 +39,7 @@ public class normal2_scorpion extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment normal2_scorpion.
      */
+    @NonNull
     public static normal2_scorpion newInstance(String param1, String param2) {
         normal2_scorpion fragment = new normal2_scorpion();
         Bundle args = new Bundle();
@@ -52,18 +59,32 @@ public class normal2_scorpion extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_normal2_scorpion, container, false);
-        view.findViewById(R.id.btn_mov_adelante_sc).setOnClickListener(click(1));
-        view.findViewById(R.id.btn_mov_atras_sc).setOnClickListener(click(2));
-        view.findViewById(R.id.btn_mov_derecha_sc).setOnClickListener(click(3));
-        view.findViewById(R.id.btn_mov_izquierda_sc).setOnClickListener(click(4));
+        view.findViewById(R.id.btn_mov_adelante_sc).setOnTouchListener(click("1"));
+        view.findViewById(R.id.btn_mov_atras_sc).setOnTouchListener(click("2"));
+        view.findViewById(R.id.btn_mov_derecha_sc).setOnTouchListener(click("3"));
+        view.findViewById(R.id.btn_mov_izquierda_sc).setOnTouchListener(click("4"));
+        args = getArguments();
         return view;
     }
 
-    private View.OnClickListener click(int lado){
-        return v -> {
-            System.out.println(lado);
+    @NonNull
+    @Contract(pure = true)
+    @SuppressLint("ClickableViewAccessibility")
+    private View.OnTouchListener click(String lado){
+        return (v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), "scorpion").execute(lado);
+                    break;
+                case  MotionEvent.ACTION_UP:
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), "scorpion").execute("5");
+                    break;
+                default:
+                    break;
+            }
+            return true;
         };
     }
 

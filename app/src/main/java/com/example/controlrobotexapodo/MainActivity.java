@@ -12,6 +12,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         findViewById(R.id.btn_ajustes).setOnClickListener(v -> abrirAjustes());
-        findViewById(R.id.conectar_spider).setOnClickListener(v -> conectar(80));
-        findViewById(R.id.conectar_scorpion).setOnClickListener(v -> conectar(333));
+        findViewById(R.id.conectar_spider).setOnClickListener(v -> conectar("Spider"));
+        findViewById(R.id.conectar_scorpion).setOnClickListener(v -> conectar("Scorpion"));
         almacenamiento = new Almacenamiento();
         crearCarpetas();
     }
@@ -45,16 +46,28 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(MainActivity.this, ajustes.class));
     }
 
-    private void conectar(int puerto){
-        EnviarDatos ed = new EnviarDatos(puerto, "scorpion");
-        ed.execute("1");
-        if(!ed.getRespuesta().equals("Error")){
-            if(puerto == 333){
-                startActivity(new Intent(MainActivity.this, control_scopion.class));
+    private void conectar(String robot){
+        try {
+            Intent intent;
+            JSONObject json = almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.conexion);
+            String ip = (String) json.get("IP");
+            int puerto = (int) json.get("Puerto" + robot);
+            EnviarDatos ed = new EnviarDatos(ip, puerto, robot);
+            ed.execute("7");
+            if(!ed.getRespuesta().equals("Error")){
+                if(robot.equals("Scorpion")){
+                    intent = new Intent(MainActivity.this, control_scopion.class);
+                }
+                else{
+                    intent = new Intent(MainActivity.this, contol.class);
+                }
+                intent.putExtra("ip", ip);
+                intent.putExtra("puerto", puerto);
+                startActivity(intent);
             }
-            else{
-                startActivity(new Intent(MainActivity.this, contol.class));
-            }
+        }
+        catch (JSONException e) {
+            System.out.println(e);
         }
     }
 }

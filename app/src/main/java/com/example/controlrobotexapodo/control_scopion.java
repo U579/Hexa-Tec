@@ -32,7 +32,7 @@ public class control_scopion extends AppCompatActivity {
     private int normal, especial, giro, palanca;
     private String ruta = null;
     private Almacenamiento almacenamiento;
-
+    private Bundle args;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class control_scopion extends AppCompatActivity {
         findViewById(R.id.btn_radar).setOnClickListener(v -> agregar("radar"));
         findViewById(R.id.lista_grabaciones).setOnClickListener(v -> agregar("lista"));
         asignarValores(Objects.requireNonNull(JSON()));
+        args = getIntent().getExtras();
         cambiarControl();
     }
 
@@ -60,9 +61,9 @@ public class control_scopion extends AppCompatActivity {
                 if(almacenamiento.comprobarJSON(ruta,"settings.json")){
                     return almacenamiento.leerJSON(ruta);
                 }
-                return almacenamiento.cargarJSONlocal(getApplicationContext());
+                return almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.ajustes);
             }
-            return almacenamiento.cargarJSONlocal(getApplicationContext());
+            return almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.ajustes);
         }
         catch (Exception e){
             System.out.println(e);
@@ -80,21 +81,24 @@ public class control_scopion extends AppCompatActivity {
         catch (JSONException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     private void cambiarControl(){
+        Fragment control = null;
         switch (normal){
             case 1:
-                getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, new normal1_scorpion()).commit();
+                control = new normal1_scorpion();
                 break;
             case 2:
-                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal2_scorpion()).commit();
+                control = new normal2_scorpion();
                 break;
             case 3:
-                getSupportFragmentManager().beginTransaction().add(R.id.cont_normal_scorpion, new normal3_scorpion()).commit();
+                control = new normal3_scorpion();
                 break;
         }
+        assert control != null;
+        control.setArguments(args);
+        getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, control).commit();
     }
 
     private void agregar(String objeto){

@@ -68,12 +68,12 @@ public class ajustes extends AppCompatActivity {
                     asignarValores(ajustes);
                 }
                 else{
-                    ajustes = almacenamiento.cargarJSONlocal(getApplicationContext());
+                    ajustes = almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.ajustes);
                     almacenamiento.guardarJSON(ajustes.toString(), ruta);
                 }
             }
             else{
-                ajustes = almacenamiento.cargarJSONlocal(getApplicationContext());
+                ajustes = almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.ajustes);
             }
         }
         catch (Exception e){

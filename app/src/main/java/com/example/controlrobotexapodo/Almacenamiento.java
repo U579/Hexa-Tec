@@ -70,10 +70,10 @@ public class Almacenamiento {
      * @param context Interfaz actual de la aplicación
      * @return JSONObject
      */
-    public JSONObject cargarJSONlocal(Context context) {
+    public JSONObject cargarJSONlocal(Context context, int recurso) {
         try {
             Resources resources = context.getResources();
-            InputStream inputStream = resources.openRawResource(R.raw.ajustes);
+            InputStream inputStream = resources.openRawResource(recurso);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
             StringBuilder stringBuilder = leido(bufferedReader);
             inputStream.close();

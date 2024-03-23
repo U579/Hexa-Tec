@@ -20,7 +20,8 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
     private int puerto;
     private String robot;
     private Conexion conexion;
-    private String respuesta;
+    private String respuesta = "";
+    private String ip;
 
     /**
      * Constructor vacio de la clase
@@ -31,7 +32,8 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
      * @param puerto
      * @param robot
      */
-    EnviarDatos(int puerto, String robot){
+    EnviarDatos(String ip, int puerto, String robot){
+        this.ip = ip;
         this.puerto = puerto;
         this.robot = robot;
         conexion = new Conexion();
@@ -39,9 +41,9 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(@NonNull String... strings) {
-        String response = "";
+        String response;
         try {
-            conexion.conectarConServidor("192.168.4.1", puerto);
+            conexion.conectarConServidor(ip, puerto);
             conexion.enviarComando(strings[0]);
             response = conexion.recibirRespuesta();
         }
@@ -54,15 +56,18 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        this.respuesta = s;
-        System.out.println(s);
         try {
+            respuesta = s;
             conexion.cerrarConexion();
         }
         catch (IOException e) {
             System.out.println(e);
             respuesta = "Error";
         }
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public void setPuerto(int puerto) {
