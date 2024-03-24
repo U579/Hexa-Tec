@@ -28,6 +28,8 @@ public class Conexion {
      * */
     public void conectarConServidor(String ip, int puerto) throws IOException {
         socket = new Socket(ip, puerto);
+        socket.setSoTimeout(2000);
+        System.out.println("Conexion establecida");
     }
 
     /**
@@ -36,18 +38,31 @@ public class Conexion {
      * @throws  IOException
      * @author: Uriel Gomez
      * @version: 23/03/2024*/
-    public void enviarComando(@NonNull String comando) throws IOException {
-        socket.getOutputStream().write(comando.getBytes());
+    public void enviarComando(@NonNull String comando){
+        try {
+            socket.getOutputStream().write(comando.getBytes());
+            System.out.println("Comando enviado: " + comando);
+        }
+        catch (IOException e) {
+            try {
+                socket.getOutputStream().write(("9").getBytes());
+                System.out.println("Error comando enviado: 9");
+            }
+            catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 
     /**
      * Recibir una respuesta enviada por el servidor
-     * @throws  IOException
+     * @throws IOException
      * @author: Uriel Gomez
      * @version: 23/03/2024*/
     public String recibirRespuesta() throws IOException {
         byte[] buffer = new byte[1024];
         int bytesRead = socket.getInputStream().read(buffer);
+        System.out.println("Respuesta recibida");
         return new String(buffer, 0, bytesRead);
     }
 
@@ -60,6 +75,7 @@ public class Conexion {
     public void cerrarConexion() throws IOException {
         if (socket != null) {
             socket.close();
+            System.out.println("Conexion cerrada.");
         }
     }
 

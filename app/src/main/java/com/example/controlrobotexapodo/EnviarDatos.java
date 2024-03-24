@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Arrays;
 
 public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     private int puerto;
-    private String robot;
+    private Boolean responder;
     private Conexion conexion;
     private String respuesta = "";
     private String ip;
@@ -30,52 +31,67 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
 
     /**Constructor con parametros para la clase
      * @param puerto
-     * @param robot
+     * @param responder
      */
-    EnviarDatos(String ip, int puerto, String robot){
+    EnviarDatos(String ip, int puerto, Boolean responder){
         this.ip = ip;
         this.puerto = puerto;
-        this.robot = robot;
+        this.responder = responder;
         conexion = new Conexion();
     }
 
     @Override
     protected String doInBackground(@NonNull String... strings) {
-        String response;
         try {
-            conexion.conectarConServidor(ip, puerto);
-            conexion.enviarComando(strings[0]);
-            response = conexion.recibirRespuesta();
+            realizarConexion(strings[0]);
         }
         catch (IOException e) {
             System.out.println(e);
-            response = "Error.";
+            respuesta = "Error.";
+            try {
+                System.out.println("Error enviando comando para detener al robot.");
+                conexion.cerrarConexion();
+                realizarConexion("9");
+            }
+            catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-        return response;
+        return "";
     }
 
-    @Override
-    protected void onPostExecute(String s) {
-        try {
-            respuesta = s;
-            conexion.cerrarConexion();
+    private void realizarConexion(String comando) throws IOException {
+        System.out.println("Estableciendo conexión a traves de : " + ip + ":" + puerto);
+        conexion.conectarConServidor(ip, puerto);
+        conexion.enviarComando(comando);
+        if(responder){
+            respuesta = conexion.recibirRespuesta();
         }
-        catch (IOException e) {
-            System.out.println(e);
-            respuesta = "Error";
-        }
+        conexion.cerrarConexion();
+    }
+
+    public String getIp() {
+        return ip;
     }
 
     public void setIp(String ip) {
         this.ip = ip;
     }
 
+    public int getPuerto() {
+        return puerto;
+    }
+
     public void setPuerto(int puerto) {
         this.puerto = puerto;
     }
 
-    public void setRobot(String robot) {
-        this.robot = robot;
+    public Boolean getResponder() {
+        return responder;
+    }
+
+    public void setResponder(Boolean responder) {
+        this.responder = responder;
     }
 
     public String getRespuesta() {

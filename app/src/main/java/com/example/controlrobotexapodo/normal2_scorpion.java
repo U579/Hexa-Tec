@@ -1,6 +1,7 @@
 package com.example.controlrobotexapodo;
 
 import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -75,10 +76,12 @@ public class normal2_scorpion extends Fragment {
         return (v, event) -> {
             switch (event.getAction()){
                 case MotionEvent.ACTION_DOWN:
-                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), "scorpion").execute(lado);
+                    System.out.println("Enviando comando: " + lado);
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), false).execute(lado);
                     break;
-                case  MotionEvent.ACTION_UP:
-                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), "scorpion").execute("5");
+                case MotionEvent.ACTION_UP:
+                    System.out.println("Enviando comando: 9");
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), false).execute("9");
                     break;
                 default:
                     break;

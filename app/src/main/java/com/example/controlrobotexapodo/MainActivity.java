@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
             JSONObject json = almacenamiento.cargarJSONlocal(getApplicationContext(), R.raw.conexion);
             String ip = (String) json.get("IP");
             int puerto = (int) json.get("Puerto" + robot);
-            EnviarDatos ed = new EnviarDatos(ip, puerto, robot);
-            ed.execute("7");
-            if(!ed.getRespuesta().equals("Error")){
+            EnviarDatos ed = new EnviarDatos(ip, puerto, false);
+            ed.execute("9");
+            if(!ed.getRespuesta().equals("Error.")){
                 if(robot.equals("Scorpion")){
                     intent = new Intent(MainActivity.this, control_scopion.class);
                 }
@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("ip", ip);
                 intent.putExtra("puerto", puerto);
                 startActivity(intent);
+            }
+            else{
+                Toast.makeText(this, "Error al realizar la conexión.", Toast.LENGTH_SHORT).show();
             }
         }
         catch (JSONException e) {
