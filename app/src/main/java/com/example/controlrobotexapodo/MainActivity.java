@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             EnviarDatos ed = new EnviarDatos(ip, puerto, false);
             ed.execute("9");
             if(!ed.getRespuesta().equals("Error.")){
+                ed.cancel(true);
                 if(robot.equals("Scorpion")){
                     intent = new Intent(MainActivity.this, control_scopion.class);
                 }

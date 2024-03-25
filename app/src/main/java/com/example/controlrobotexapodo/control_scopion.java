@@ -1,10 +1,9 @@
 package com.example.controlrobotexapodo;
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -18,22 +17,17 @@ import androidx.fragment.app.Fragment;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
+@SuppressLint("UseSwitchCompatOrMaterialCode")
 public class control_scopion extends AppCompatActivity {
 
     private int normal, especial, giro, palanca;
     private String ruta = null;
     private Almacenamiento almacenamiento;
     private Bundle args;
-    @SuppressLint("MissingInflatedId")
+    private Switch automatico;
+    @SuppressLint({"MissingInflatedId", "ClickableViewAccessibility"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +43,10 @@ public class control_scopion extends AppCompatActivity {
         findViewById(R.id.salir_control_scorpion).setOnClickListener(v -> finish());
         findViewById(R.id.btn_radar).setOnClickListener(v -> agregar("radar"));
         findViewById(R.id.lista_grabaciones).setOnClickListener(v -> agregar("lista"));
+        findViewById(R.id.btn_defensa).setOnClickListener(v -> activarDefensa());
+        findViewById(R.id.btn_equilibrio).setOnClickListener(v -> activarEquilibrio());
+        automatico = findViewById(R.id.automatico);
+        automatico.setOnClickListener(v -> auto(automatico.isChecked()));
         asignarValores(Objects.requireNonNull(JSON()));
         args = getIntent().getExtras();
         cambiarControl();
@@ -84,7 +82,7 @@ public class control_scopion extends AppCompatActivity {
     }
 
     private void cambiarControl(){
-        Fragment control = null;
+        Fragment control;
         switch (normal){
             case 1:
                 control = new normal1_scorpion();
@@ -95,8 +93,9 @@ public class control_scopion extends AppCompatActivity {
             case 3:
                 control = new normal3_scorpion();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + normal);
         }
-        assert control != null;
         control.setArguments(args);
         getSupportFragmentManager().beginTransaction().replace(R.id.cont_normal_scorpion, control).commit();
     }
@@ -108,6 +107,7 @@ public class control_scopion extends AppCompatActivity {
         else{
             switch (objeto){
                 case "radar":
+                    activarRadar();
                     getSupportFragmentManager().beginTransaction().replace(R.id.sobreponer, new radar()).commit();
                     break;
                 case "lista":
@@ -116,5 +116,30 @@ public class control_scopion extends AppCompatActivity {
             }
             findViewById(R.id.sobreponer).setVisibility(View.VISIBLE);
         }
+    }
+
+    private void activarDefensa(){
+        new EnviarDatos(args.getString("ip"), args.getInt("puerto"),false).execute("10");
+    }
+
+    private void activarRadar(){
+        new EnviarDatos(args.getString("ip"), args.getInt("puerto"),false).execute("7");
+    }
+
+    private void activarEquilibrio(){
+        new EnviarDatos(args.getString("ip"), args.getInt("puerto"),false).execute("5");
+    }
+
+    private void auto(@NonNull Boolean activar){
+        if(activar){
+            new EnviarDatos(args.getString("ip"), args.getInt("puerto"),false).execute("8");
+        }
+        else{
+            detenerse();
+        }
+    }
+
+    private void detenerse(){
+        new EnviarDatos(args.getString("ip"), args.getInt("puerto"),false).execute("9");
     }
 }

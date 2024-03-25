@@ -49,6 +49,7 @@
 
             <Switch
                 style="@style/ThemeOverlay.App.widget.switch"
+                android:id="@+id/automatico"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/black"
@@ -116,14 +117,6 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/baseline_video_camera_back_24"
-                        android:contentDescription="@string/camara"
-                        tools:ignore="NestedWeights" />
-
-                    <ImageView
                         android:id="@+id/btn_radar"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
@@ -141,6 +134,15 @@
                         android:layout_marginTop="5dp"
                         android:src="@drawable/baseline_shield_24"
                         android:contentDescription="@string/escudo"
+                        tools:ignore="NestedWeights" />
+
+                    <ImageView
+                        android:id="@+id/btn_equilibrio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/baseline_bug_report_24"
+                        android:contentDescription="@string/camara"
                         tools:ignore="NestedWeights" />
 
                 </LinearLayout>

@@ -15,6 +15,9 @@ import android.widget.ImageView;
 
 import org.jetbrains.annotations.Contract;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link normal1_scorpion#newInstance} factory method to
@@ -31,6 +34,9 @@ public class normal1_scorpion extends Fragment {
     private float y;
     private ConstraintLayout cl;
     private Bundle args;
+    private int aux1 = 0;
+    private int aux2 = 0;
+    private String aux3 = "9";
 
     public normal1_scorpion(){
     }
@@ -84,6 +90,7 @@ public class normal1_scorpion extends Fragment {
     }
 
     private void mover(@NonNull MotionEvent event){
+        int vx = 0,vy = 0;
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 x = event.getX();
@@ -91,11 +98,11 @@ public class normal1_scorpion extends Fragment {
                 break;
             case MotionEvent.ACTION_MOVE:
                 //asignar posicion y limites de bolita en X y Y
-                float x2 = limite(joystick.getX() + event.getX() - x);
-                float y2 = limite(joystick.getY() + event.getY() - y);
+                float x2 = limiteJoystick(joystick.getX() + event.getX() - x);
+                float y2 = limiteJoystick(joystick.getY() + event.getY() - y);
                 //asignar valores de X y Y para trabajar con ellos
-                int vx = asignar(x2);
-                int vy = asignar(y2);
+                vx = asignarValor((int) (x2 + 1), (cl.getWidth() - joystick.getWidth() + 1) / 4);
+                vy = asignarValor((int) (y2 + 1), (cl.getHeight() - joystick.getHeight() + 1) / 4);
                 //mover bolita en X y Y
                 joystick.setX(x2);
                 joystick.setY(y2);
@@ -104,14 +111,31 @@ public class normal1_scorpion extends Fragment {
                 //regresar bolita al centro
                 joystick.setX(((float) cl.getWidth() / 2) - ((float) joystick.getWidth() / 2));
                 joystick.setY(((float) cl.getHeight() / 2) - ((float) joystick.getHeight() / 2));
-                //establecer valores en 0
-                vx = 0;
-                vy = 0;
                 break;
+        }
+        if(aux1 != vx || aux2 != vy){
+            ejecutarAccion(vx,vy);
         }
     }
 
-    private float limite(float posicion){
+    private void ejecutarAccion(int vx, int vy){
+        if(aux1 != vx){
+            aux1 = vx;
+        }
+        if(aux2 != vy){
+            aux2 = vy;
+        }
+        String comando = seleccionarComando(vx,vy);
+        if(!comando.equals(aux3)){
+            aux3 = comando;
+            EnviarDatos ed = new EnviarDatos(args.getString("ip"), args.getInt("puerto"), false);
+            ed.execute(comando);
+            ed.cancel(true);
+
+        }
+    }
+
+    private float limiteJoystick(float posicion){
         if(posicion < 0){
             return 0;
         }
@@ -121,19 +145,54 @@ public class normal1_scorpion extends Fragment {
         return posicion;
     }
 
-    private int asignar(float comparar){
-        if(comparar + 1 > (float) cl.getWidth() / 2){
-            if(comparar + 1 > ((float) cl.getWidth() / 4) * 3){
+    private int asignarValor(int comparar, int comparador){
+        if(comparar > comparador * 2){
+            if(comparar > comparador * 3){
                 return 2;
             }
             return 1;
         }
-        else if(comparar + 1 < (float) cl.getWidth() / 2){
-            if(comparar + 1 < (float) cl.getWidth() / 4){
+        else if(comparar < comparador * 2){
+            if(comparar < comparador){
                 return -2;
             }
             return -1;
         }
         return 0;
+    }
+
+    @NonNull
+    @Contract(pure = true)
+    private String seleccionarComando(int vx, int vy){
+        if(Math.abs(vx) == 2 || Math.abs(vy) == 2){
+            if(vx < 0 && vy < 0){
+                return compararValores(vx,vy, "1", "4");
+            }
+            else if(vx > 0 && vy > 0){
+                return compararValores(vx,vy, "2", "3");
+            }
+            else if(vx < 0 && vy > 0){
+                return compararValores(vx,vy, "2", "4");
+            }
+            else if(vx > 0 && vy < 0){
+                return compararValores(vx,vy, "1", "3");
+            }
+            else{
+                return "9";
+            }
+        }
+        return "9";
+    }
+
+    private String compararValores(int cx, int cy, String r1, String r2){
+        if(Math.abs(cx) < Math.abs(cy)){
+            return r1;
+        }
+        else if(Math.abs(cx) > Math.abs(cy)){
+            return r2;
+        }
+        else{
+            return r1;
+        }
     }
 }

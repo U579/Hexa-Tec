@@ -1,13 +1,17 @@
 package com.example.controlrobotexapodo;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.jetbrains.annotations.Contract;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +24,7 @@ public class normal3_scorpion extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    private Bundle args;
 
     public normal3_scorpion() {
     }
@@ -54,16 +59,30 @@ public class normal3_scorpion extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_normal3_scorpion, container, false);
-        view.findViewById(R.id.adelante_sc).setOnClickListener(click(1));
-        view.findViewById(R.id.atras_sc).setOnClickListener(click(2));
-        view.findViewById(R.id.rotar_derecha_sc).setOnClickListener(click(3));
-        view.findViewById(R.id.rotar_izquierda_sc).setOnClickListener(click(4));
+        view.findViewById(R.id.adelante_sc).setOnTouchListener(click("1"));
+        view.findViewById(R.id.atras_sc).setOnTouchListener(click("2"));
+        view.findViewById(R.id.rotar_derecha_sc).setOnTouchListener(click("3"));
+        view.findViewById(R.id.rotar_izquierda_sc).setOnTouchListener(click("4"));
+        args = getArguments();
         return view;
     }
 
-    private View.OnClickListener click(int lado){
-        return v -> {
-            System.out.println(lado);
+    @NonNull
+    @Contract(pure = true)
+    @SuppressLint("ClickableViewAccessibility")
+    private View.OnTouchListener click(String lado){
+        return (v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), false).execute(lado);
+                    break;
+                case MotionEvent.ACTION_UP:
+                    new EnviarDatos(args.getString("ip"), args.getInt("puerto"), false).execute("9");
+                    break;
+                default:
+                    break;
+            }
+            return true;
         };
     }
 }

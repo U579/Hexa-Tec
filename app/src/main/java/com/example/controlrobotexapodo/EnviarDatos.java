@@ -47,22 +47,21 @@ public class EnviarDatos extends AsyncTask<String, Void, String> {
         }
         catch (IOException e) {
             System.out.println(e);
-            respuesta = "Error.";
             try {
                 System.out.println("Error enviando comando para detener al robot.");
                 conexion.cerrarConexion();
                 realizarConexion("9");
             }
             catch (IOException ex) {
-                throw new RuntimeException(ex);
+                System.out.println(ex);
             }
         }
         return "";
     }
 
     private void realizarConexion(String comando) throws IOException {
-        System.out.println("Estableciendo conexión a traves de : " + ip + ":" + puerto);
         conexion.conectarConServidor(ip, puerto);
+        System.out.println("Conectado: " + conexion.getSocket().isConnected());
         conexion.enviarComando(comando);
         if(responder){
             respuesta = conexion.recibirRespuesta();
